@@ -125,7 +125,7 @@ def main():
             else:
                 depth[i,j] = 0
             #print("C:",ncc_tmp[i,j],depth[i,j])
-    cv2.imwrite("depth1_w3.jpg",np.array(depth,dtype=np.uint8))
+    cv2.imwrite("depth1_w5.jpg",np.array(depth,dtype=np.uint8))
     cv2.imshow("Depth",np.array(depth,dtype=np.uint8))    
     cv2.waitKey(0)
     cv2.destroyAllWindows()
