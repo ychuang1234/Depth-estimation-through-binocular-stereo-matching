@@ -89,18 +89,18 @@ class NCC(conv):
         cc = cross / np.power((I_var * J_var + 1e-5),0.5)
         return cc
 def main():
-    left = cv2.imread("%s\sfm\\tmp1.jpg"%os.getcwd(),cv2.IMREAD_GRAYSCALE)
+    left = cv2.imread("tmp1_1.jpg",cv2.IMREAD_GRAYSCALE)
     left = cv2.resize(left,(200,267))
     #print("size:",left.shape)
     #cv2.imshow("left",left)
     #cv2.waitKey(0)
-    right = cv2.imread("%s\sfm\\tmp2.jpg"%os.getcwd(),cv2.IMREAD_GRAYSCALE)
+    right = cv2.imread("tmp1_2.jpg",cv2.IMREAD_GRAYSCALE)
     right = cv2.resize(right,(200,267))
     #cv2.imshow("right",right)
     #cv2.waitKey(0)
     dmin = -20
     dmax = 60
-    ws = 10
+    ws = 5
     ncc = NCC(ws=ws)
     im = np.zeros((left.shape[0],left.shape[1]))
     ncc_record = np.zeros((left.shape[0],left.shape[1],dmax-dmin))
@@ -124,8 +124,8 @@ def main():
                 depth[i,j] = 2550/ncc_tmp[i,j]
             else:
                 depth[i,j] = 0
-            print("C:",ncc_tmp[i,j],depth[i,j])
-    cv2.imwrite("%s\sfm\depth.jpg"%(os.getcwd()),np.array(depth,dtype=np.uint8))
+            #print("C:",ncc_tmp[i,j],depth[i,j])
+    cv2.imwrite("depth1_w3.jpg",np.array(depth,dtype=np.uint8))
     cv2.imshow("Depth",np.array(depth,dtype=np.uint8))    
     cv2.waitKey(0)
     cv2.destroyAllWindows()
