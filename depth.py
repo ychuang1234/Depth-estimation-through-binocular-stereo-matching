@@ -100,7 +100,7 @@ def main():
     #cv2.waitKey(0)
     dmin = -20
     dmax = 60
-    ws = 5
+    ws = 7
     ncc = NCC(ws=ws)
     im = np.zeros((left.shape[0],left.shape[1]))
     ncc_record = np.zeros((left.shape[0],left.shape[1],dmax-dmin))
@@ -125,7 +125,7 @@ def main():
             else:
                 depth[i,j] = 0
             #print("C:",ncc_tmp[i,j],depth[i,j])
-    cv2.imwrite("depth_w5.jpg",np.array(depth,dtype=np.uint8))
+    cv2.imwrite("depth_w7.jpg",np.array(depth,dtype=np.uint8))
     cv2.imshow("Depth",np.array(depth,dtype=np.uint8))    
     cv2.waitKey(0)
     cv2.destroyAllWindows()
