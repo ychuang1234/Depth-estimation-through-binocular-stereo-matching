@@ -89,12 +89,12 @@ class NCC(conv):
         cc = cross / np.power((I_var * J_var + 1e-5),0.5)
         return cc
 def main():
-    left = cv2.imread("tmp1_1.jpg",cv2.IMREAD_GRAYSCALE)
+    left = cv2.imread("tmp1.jpg",cv2.IMREAD_GRAYSCALE)
     left = cv2.resize(left,(200,267))
     #print("size:",left.shape)
     #cv2.imshow("left",left)
     #cv2.waitKey(0)
-    right = cv2.imread("tmp1_2.jpg",cv2.IMREAD_GRAYSCALE)
+    right = cv2.imread("tmp2.jpg",cv2.IMREAD_GRAYSCALE)
     right = cv2.resize(right,(200,267))
     #cv2.imshow("right",right)
     #cv2.waitKey(0)
@@ -125,7 +125,7 @@ def main():
             else:
                 depth[i,j] = 0
             #print("C:",ncc_tmp[i,j],depth[i,j])
-    cv2.imwrite("depth1_w5.jpg",np.array(depth,dtype=np.uint8))
+    cv2.imwrite("depth_w5.jpg",np.array(depth,dtype=np.uint8))
     cv2.imshow("Depth",np.array(depth,dtype=np.uint8))    
     cv2.waitKey(0)
     cv2.destroyAllWindows()
