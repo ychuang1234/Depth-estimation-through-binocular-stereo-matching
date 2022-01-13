@@ -3,7 +3,7 @@
 <h2 align="center"> 
   
   ## Goal
-Use Normalized cross correlation to match binoclar stereo vision and calculate depth according to the disparity from each pixel.
+Use Normalized cross correlation (NCC) to match binoclar stereo vision and calculate depth according to the disparity from each pixel.
  
   ## Introduction
 
@@ -13,30 +13,32 @@ Use Normalized cross correlation to match binoclar stereo vision and calculate d
  <img src="https://github.com/ychuang1234/Depth-estimation-through-binocular-image/blob/7247ad144e94d91a7121cc30df743684809ec436/stereo-matching.JPG" height="80%">
  </p>
  
-  ## Description
+  ## Procedure in this project
  
  ### (1) Rectify images to make epipolar line horizontal
  
- ### (2) For each pixel, scan along epipolar line for best matching in predefined kernel window and compute depth from disparity from the formula in the following 
+ ### (2) For each pixel, scan along epipolar line for best matching in predefined kernel window. In this project, I used NCC as the indicator measuring similarity between two image blocks:
 ![](http://latex.codecogs.com/svg.latex?Similarity:=NCC=\frac{\sum_{(i,j)\in{w}}I_{1}(i,j)\cdot{I_{2}(x+i.y+j)}}{\sqrt{\sum_{(i,j)\in_w}I_{1}^{2}(i,j)\cdot{\sum_{(i,j)\in{w}}}I_{2}^{2}(x+i,y+j)}})
  
- 
-![](http://latex.codecogs.com/svg.latex?Z=\frac{bf}{d})
- 
+ ### (3) Compute depth from disparity from the formula in the following:
+![](http://latex.codecogs.com/svg.latex?Depth:=Z=\frac{bf}{d})
 
- 
-
- ### (3) Contraint energy (optional) : In this project, I used random gaussian noise as the contraint energy 
- ![](http://latex.codecogs.com/svg.latex?E_{constraint}=G(\mu,\sigma))
- 
- ### (4-1) Optimization step (thereoretically): Gradient decent
- 
-
-  ### (4-2) Optimization step (in this project): trust region optimization
- Search in pre-defined range to find if there is any new position that could lower snake energy and update. 
-
+  In order to avoid depth estimation calculated from matches which are **not considered as good matches**, I set **0.5 as threashold** empirically. That is to say, matches with NCC value <0.5 would not be calculated its corresponding depth.
 
 ## Experiment and Result
-This is the procedure in experiment but **not yet adjust the weights** of each designated energy term.
-
-
+In this project, I use two sets of picture as binocular vision. In each set of experiment, first from left one is reference image, and second from left is used as matching image. The depth map is calculated from **window size 7\*7 and 10\*10 pixels**, which are the second from the right and first from the right respectively.
+ <p align="center">
+ <img src="https://github.com/ychuang1234/Depth-estimation-through-binocular-image/blob/d64f216c0fc5b02d15e83a356501369eb8eb8dab/tmp1_1.jpg" width="20%" height="30%">
+ <img src="https://github.com/ychuang1234/Depth-estimation-through-binocular-image/blob/7247ad144e94d91a7121cc30df743684809ec436/tmp1_2.jpg" width="20%" height="30%">
+ <img src="https://github.com/ychuang1234/Depth-estimation-through-binocular-image/blob/89716ceb200a5ee9b08de66ffbfd632801e53d77/depth1_w7.jpg" width="20%" height="30%">  
+ <img src="https://github.com/ychuang1234/Depth-estimation-through-binocular-image/blob/ac56e2ce584b81bcb8b4c7651596fdd3ecd3d4af/depth1_10.jpg" width="20%" height="30%">
+  
+ </p>
+  
+  
+ <p align="center">
+ <img src="https://github.com/ychuang1234/Depth-estimation-through-binocular-image/blob/d64f216c0fc5b02d15e83a356501369eb8eb8dab/tmp1.jpg" width="20%" height="30%">
+ <img src="https://github.com/ychuang1234/Depth-estimation-through-binocular-image/blob/7247ad144e94d91a7121cc30df743684809ec436/tmp2.jpg" width="20%" height="30%">
+ <img src="https://github.com/ychuang1234/Depth-estimation-through-binocular-image/blob/89716ceb200a5ee9b08de66ffbfd632801e53d77/depth_w7.jpg" width="20%" height="30%">
+ <img src="https://github.com/ychuang1234/Depth-estimation-through-binocular-image/blob/ec30ead83d2ba52fcfb92981626d991a64dd11a6/depth_10.jpg" width="20%" height="30%">
+ </p>
